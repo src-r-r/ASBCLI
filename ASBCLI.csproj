@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{057575EC-6BE2-4606-8E68-6D1CE5AC0B26}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ASBCLI</RootNamespace>
+    <AssemblyName>ASBCLI</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ExternalConsole>true</ExternalConsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="CLIMapper">
+      <HintPath>..\packages\CLI-Argument-Mapper.1.1.0\lib\net45\CLIMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Web.RegularExpressions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="AltSrcBankException.cs" />
+    <Compile Include="Dispatch\Index.cs" />
+    <Compile Include="Dispatch\Dispatchable.cs" />
+    <Compile Include="Dispatch\UserDispatch.cs" />
+    <Compile Include="Dispatch\TypeDecls.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Menu.cs" />
+    <Compile Include="MenuItem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ASBLib\ASBLib.csproj">
+      <Project>{8504AA99-07ED-4963-974B-EA7E8433D94C}</Project>
+      <Name>ASBLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dispatch\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
