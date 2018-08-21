@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Caching;
 using System.Text.RegularExpressions;
 using AltSrcBank.Models;
+using ASBCLI.Financial;
 using ASBLib.Exceptions;
 
 namespace ASBCLI
@@ -12,7 +13,8 @@ namespace ASBCLI
 	public class Controller
 	{
 		private const int EXPIRATION_MINUTES = 5000;
-		private const String LIST_KEY = "users";
+		private const string LIST_KEY = "users",
+		    SESSION_KEY = "session";
 
 		private string mCacheName;
 		private object mService;
@@ -61,7 +63,7 @@ namespace ASBCLI
 
 		public UserSet getAllUsers()
 		{
-			return mUsers;
+			return (mUsers != null) ? mUsers : new UserSet();
 		}
         
 		public void userAdd(User user)
@@ -71,35 +73,23 @@ namespace ASBCLI
 				throw new AltSrcBankException(
 					"User with that email exists"
 				);
-			}         
+			}
 			mUsers.Add(user.getEmail(), user);
 			writeCache();
 		}
 
-		public bool userAuthenticate(String email, String password) {
+		public string userAuthenticate(String email, String password) {
 			readCache();
 			return (mUsers.ContainsKey(email) &&
-					mUsers[email].passwordsMatch(password));
-		}
-        
-		private void requireAuth(String email, String password) {
-            if (!userAuthenticate(email, password))
-            {
-                throw new AuthorizationException("Authorization error");
-            }
+			        mUsers[email].passwordsMatch(password)) ? email : null;
 		}
 
-		public void userUpdateEmail(String email, String password, String newEmail) {
-			requireAuth(email, password);
-			mUsers[email].setEmail(newEmail);
-            writeCache();
-		}
-
-		public void userUpdatePassword(String email, String password, String newPassword)
-        {
-			requireAuth(email, password);
-            mUsers[email].setPassword(newPassword);
+		public int AccountAddTransaction(User user, Transaction transaction)
+		{
+			readCache();
+			user.AddTransaction(transaction);
 			writeCache();
-        }
+			return 1;
+		}
     }
 }

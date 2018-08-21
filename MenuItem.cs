@@ -1,38 +1,35 @@
 ﻿using System;
 namespace ASBCLI
 {
-    public class MenuItem
-	{
-        public delegate void FPointer(object context = null);
-		private string mDescription;
+	public class MenuItem : MenuEntry
+    {
 		private FPointer mCallback;
+		protected Menu mMenu;
 
-        public MenuItem(string description, FPointer callback)
-        {
-            mDescription = description;
-            mCallback = callback;
-        }
-
-		public string description
+		public Menu MMenu
 		{
 			get
 			{
-				return mDescription;
+				return mMenu;
 			}
 		}
 
-		public void SetDescription(string description) {
-			mDescription = description;
+		public FPointer Callback
+		{
+			get
+			{
+				return mCallback;
+			}
 		}
 
-		public override string ToString()
-		{
-			return description;
-		}
+		public MenuItem(String description, FPointer callback, Menu menu=null) : base(description)
+        {
+			mCallback = callback;
+			mMenu = menu;
+        }
 
-		public void Select(object context=null)
-		{
-			mCallback(context);
+		public override int Select(object context = null) {
+			return mCallback(context);
 		}
 	}
 }
