@@ -91,5 +91,11 @@ namespace ASBCLI
 			writeCache();
 			return 1;
 		}
+
+		public LinkedList<Transaction> AccountGetTransactions(User user)
+		{
+			readCache();
+			return user.Transactions;
+		}
     }
 }

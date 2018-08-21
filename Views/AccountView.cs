@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AltSrcBank.Models;
 using ASBCLI.Financial;
 using ASBLib.Exceptions;
@@ -64,6 +65,21 @@ namespace ASBCLI.Views
 			return 1;
 		}
 
+        public int TransactionHistory(object context = null)
+		{
+            var ctx = ((ViewContext)context);
+            var controller = ((ViewContext)context).Controller;
+			LinkedList<Transaction> transactions = controller.AccountGetTransactions(ctx.GetUser());
+			foreach (var transaction in transactions)
+			{
+				Console.WriteLine("{0:10}{1:30}{2:30}",
+								  transaction.GetType().Name,
+								  transaction.Timestamp,
+								  transaction.Amount);
+			}
+            return 1;
+		}
+
 		public AccountView(ViewContext context, Menu parent) : base(context, "Account View", parent)
 		{
             // Console.WriteLine("Context == null ? {0}", context == null);
@@ -71,6 +87,7 @@ namespace ASBCLI.Views
                 new MenuItem("Deposit", DepositAmount, this),
                 new MenuItem("Withdraw", WithdrawAmount, this),
                 new MenuItem("View Balance", ViewBalance, this),
+				new MenuItem("Transaction History", TransactionHistory, this),
 			};
             foreach (var i in items) { Add(i); }
         }
