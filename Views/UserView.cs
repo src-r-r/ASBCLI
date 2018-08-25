@@ -110,7 +110,7 @@ namespace ASBCLI.Views
 			return 1;
 		}
 
-		public UserView(ViewContext context, MenuView parent) : base(context, "User", parent)
+		public UserView(ViewContext context, MenuView parent) : base(context, "User Menu", parent)
 		{
             // Console.WriteLine("Context == null ? {0}", context == null);
             MenuEntry[] items = new MenuEntry[]{

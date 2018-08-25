@@ -42,16 +42,23 @@ namespace ASBCLI
             }
         }
 
+        /**
+         * Convenience method to format the menu to stdout.
+         * @returns 1 on success, 0 otherwise.
+         **/
 		public int Print()
 		{
+			// First get the length of the longest item.
             int i = 0;
 			int l = 0;
 			foreach (var item in this)
 				l = item.description.Length > l ? item.description.Length : l;
 			l += 4;
+
 			Util.WriteRept("=", l);
 			Console.WriteLine(description);
 			Util.WriteRept("-", l);
+
 			if (!IsToplevel)
 			    Console.WriteLine("0. (Previous Menu)");
 			foreach (var item in this)
@@ -64,6 +71,7 @@ namespace ASBCLI
 		{
             //Console.WriteLine("prompt - Context == null ? {0}", context == null);
 			int i = BLANK;
+			string v = null;
             MenuEntry item = null;
 			while (true)
 			{
@@ -73,7 +81,8 @@ namespace ASBCLI
 				Console.Write(DEFAULT_MESSAGE, 0, Count);
 				try
 				{
-					i = int.Parse(Console.ReadLine());
+					v = Console.ReadKey().KeyChar.ToString();
+					i = int.Parse(v);
 				}
 				catch(FormatException e)
 				{
