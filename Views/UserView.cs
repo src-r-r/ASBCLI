@@ -41,6 +41,10 @@ namespace ASBCLI.Views
 				Console.WriteLine();
 				pw2 = Util.InputString("Password (Confirm): ", null, false);
 				Console.WriteLine();
+				if (pw1 == null || pw2 == null){
+					Console.WriteLine("Add User Canceled");
+					return 0;
+				}
 				if (pw1 == pw2 && pw1.Length > 0)
 					password = pw1;
 				if (password == null)

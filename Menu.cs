@@ -83,6 +83,7 @@ namespace ASBCLI
 				{
 					v = Console.ReadKey().KeyChar.ToString();
 					i = int.Parse(v);
+					Console.WriteLine(); // for formatting
 				}
 				catch(FormatException e)
 				{

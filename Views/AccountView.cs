@@ -8,6 +8,7 @@ namespace ASBCLI.Views
 {
 	public class AccountView : MenuView
     {
+		const float EPSILON = 0.0F;
 		/**
 		 * Create a general transaction.
 		 * @param name="context" Context of the application
@@ -28,6 +29,11 @@ namespace ASBCLI.Views
                 try
                 {
 					amount = Util.InputFloat(tName + " Amount (e.g. 4.25): ");
+                    if (Math.Abs(amount) < EPSILON)
+					{
+						Console.WriteLine("Nothing added.");
+						return 0;
+					}
                     transaction = (Transaction)Activator.CreateInstance(type, amount);
                 }
                 catch (ValidationException e)
