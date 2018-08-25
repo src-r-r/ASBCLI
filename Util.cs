@@ -70,7 +70,7 @@ namespace ASBCLI
 		public static float InputFloat(string prompt, float min=float.NaN,
 		                               float max=float.NaN)
 		{
-			string val = InputString(prompt, "[\\d]+(\\.\\d*)?");
+			string val = InputString(prompt, verify:"\\-?[\\d]+(\\.\\d*)?");
 			float f = float.Parse(val);
 			if ((!float.IsNaN(min) && f < min)
 			    || (!float.IsNaN(max) && f > max))
